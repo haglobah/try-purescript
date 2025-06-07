@@ -8,3 +8,7 @@ result*
 .projectile
 
 node_modules/
+
+.spago/
+output/
+.psci_modules/
