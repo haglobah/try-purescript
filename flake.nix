@@ -46,7 +46,7 @@
 
             purescript
             nodejs_24
-            spago
+            watchexec
           ];
           commands = [
             {
