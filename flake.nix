@@ -46,6 +46,7 @@
 
             purescript
             nodejs_24
+            spago
           ];
           commands = [
             {
