@@ -15,6 +15,9 @@ install +args="":
 spago +args="":
     npx spago {{args}}
 
+repl:
+    npx spago repl
+
 run:
     npx spago run
 
