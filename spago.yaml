@@ -5,6 +5,7 @@ package:
     - console
     - effect
     - foldable-traversable
+    - halogen
     - lists
     - prelude
   test:

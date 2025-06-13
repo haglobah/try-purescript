@@ -3,22 +3,35 @@ module Main where
 import Prelude
 
 import Effect (Effect)
-import Effect.Console (log)
+import Halogen as H
+import Halogen.Aff as HA
+import Halogen.HTML as HH
+import Halogen.HTML.Events as HE
+import Halogen.VDom.Driver (runUI)
 
 main :: Effect Unit
-main = do
-  log "🍝"
+main = HA.runHalogenAff do
+  body <- HA.awaitBody
+  runUI component unit body
 
-newtype Complex =
-  Complex {
-    real :: Number
-  , imaginary :: Number
-  }
+data Action = Increment | Decrement
 
-instance showComplex :: Show Complex where
-  show (Complex { real, imaginary }) =
-    case imaginary < 0.0 of
-      true ->
-        show real <> show imaginary <> "i"
-      false ->
-        show real <> "+" <> show imaginary <> "i"
+component =
+  H.mkComponent
+    { initialState
+    , render
+    , eval: H.mkEval $ H.defaultEval { handleAction = handleAction }
+    }
+  where
+  initialState _ = 0
+
+  render state =
+    HH.div_
+      [ HH.button [ HE.onClick \_ -> Decrement ] [ HH.text "-" ]
+      , HH.div_ [ HH.text $ show state ]
+      , HH.button [ HE.onClick \_ -> Increment ] [ HH.text "+" ]
+      ]
+
+  handleAction = case _ of
+    Increment -> H.modify_ \state -> state + 1
+    Decrement -> H.modify_ \state -> state - 1
